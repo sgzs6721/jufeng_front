@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Card, Form, Input, Button, Radio, message, Space, Typography, Tag, Row, Col } from 'antd';
-import { PhoneOutlined, UserOutlined, GiftOutlined, ClockCircleOutlined, FireOutlined } from '@ant-design/icons';
+import { Card, Form, Input, Button, Radio, message, Space, Typography, Tag, Row, Col, Modal } from 'antd';
+import { PhoneOutlined, UserOutlined, GiftOutlined, ClockCircleOutlined, FireOutlined, CheckCircleOutlined } from '@ant-design/icons';
 import registrationService from '../services/registration';
 import './ActivityPage.css';
 
@@ -11,12 +11,56 @@ const ActivityPage = () => {
   const [loading, setLoading] = useState(false);
   const [remainingSlots, setRemainingSlots] = useState(10);
   const [isFull, setIsFull] = useState(false);
+  const [isActivityStarted, setIsActivityStarted] = useState(false);
+  const [isActivityEnded, setIsActivityEnded] = useState(false);
+  const [countdown, setCountdown] = useState('');
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [hasRegistered, setHasRegistered] = useState(false);
+
+  // 活动开始时间：2025年10月17日 22:18:00
+  const ACTIVITY_START_TIME = new Date('2025-10-17T22:18:00').getTime();
+  // 活动结束时间：2025年10月18日 23:59:59
+  const ACTIVITY_END_TIME = new Date('2025-10-18T23:59:59').getTime();
 
   useEffect(() => {
     fetchRemainingSlots();
     const interval = setInterval(fetchRemainingSlots, 10000);
     return () => clearInterval(interval);
   }, []);
+
+  // 检查活动是否开始、是否结束和倒计时
+  useEffect(() => {
+    const checkActivityTime = () => {
+      const now = Date.now();
+      const started = now >= ACTIVITY_START_TIME;
+      const ended = now > ACTIVITY_END_TIME;
+      
+      setIsActivityStarted(started);
+      setIsActivityEnded(ended);
+
+      if (!started) {
+        const diff = ACTIVITY_START_TIME - now;
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+        
+        if (days > 0) {
+          setCountdown(`${days}天 ${hours}小时 ${minutes}分 ${seconds}秒`);
+        } else if (hours > 0) {
+          setCountdown(`${hours}小时 ${minutes}分 ${seconds}秒`);
+        } else if (minutes > 0) {
+          setCountdown(`${minutes}分 ${seconds}秒`);
+        } else {
+          setCountdown(`${seconds}秒`);
+        }
+      }
+    };
+
+    checkActivityTime();
+    const timer = setInterval(checkActivityTime, 1000);
+    return () => clearInterval(timer);
+  }, [ACTIVITY_START_TIME, ACTIVITY_END_TIME]);
 
   const fetchRemainingSlots = async () => {
     try {
@@ -31,6 +75,16 @@ const ActivityPage = () => {
   };
 
   const handleSubmit = async (values) => {
+    if (!isActivityStarted) {
+      message.warning('活动尚未开始，请耐心等待！');
+      return;
+    }
+
+    if (isActivityEnded) {
+      message.error('活动已结束，无法报名！');
+      return;
+    }
+
     if (isFull) {
       message.error('报名名额已满！');
       return;
@@ -40,7 +94,10 @@ const ActivityPage = () => {
     try {
       const response = await registrationService.register(values);
       if (response.code === 200) {
-        message.success(response.message);
+        // 标记已报名成功
+        setHasRegistered(true);
+        // 打开成功模态框
+        setShowSuccessModal(true);
         form.resetFields();
         fetchRemainingSlots();
       } else {
@@ -51,6 +108,10 @@ const ActivityPage = () => {
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleCloseSuccessModal = () => {
+    setShowSuccessModal(false);
   };
 
   return (
@@ -72,13 +133,32 @@ const ActivityPage = () => {
                 乒乓球培训超值课包来袭！
               </Title>
               <div className="countdown-inline">
-                <Tag color="red" className="limited-tag">
-                  <FireOutlined /> 限时一天，先到先得
-                </Tag>
-                <div className="remaining-slots">
-                  <div className="slots-label">剩余名额</div>
-                  <div className="slots-value" style={{ color: remainingSlots > 0 ? '#3f8600' : '#cf1322' }}>
-                    {remainingSlots} / 10
+                <div className="limited-tag-container">
+                  <FireOutlined className="fire-icon" />
+                  <span className="limited-text">限时一天，先到先得</span>
+                </div>
+                <div className="remaining-slots-card">
+                  <div className="slots-header">
+                    <GiftOutlined className="gift-icon" />
+                    <span className="slots-label">剩余名额</span>
+                  </div>
+                  <div className="slots-display">
+                    <span className="slots-current" style={{ color: remainingSlots > 0 ? '#52c41a' : '#ff4d4f' }}>
+                      {remainingSlots}
+                    </span>
+                    <span className="slots-divider">/</span>
+                    <span className="slots-total">10</span>
+                  </div>
+                  <div className="slots-progress">
+                    <div 
+                      className="slots-progress-bar" 
+                      style={{ 
+                        width: `${(10 - remainingSlots) * 10}%`,
+                        background: remainingSlots > 5 ? 'linear-gradient(90deg, #52c41a, #73d13d)' : 
+                                   remainingSlots > 0 ? 'linear-gradient(90deg, #faad14, #ffc53d)' : 
+                                   'linear-gradient(90deg, #ff4d4f, #ff7875)'
+                      }}
+                    />
                   </div>
                 </div>
               </div>
@@ -159,24 +239,65 @@ const ActivityPage = () => {
           </div>
 
           <div className="registration-section">
-            <Title level={3} className="registration-title-main">
-              ⏰ 活动时间
-            </Title>
-            <div className="registration-datetime">
-              2025年10月18日 00:00-23:59
-            </div>
+                    <Title level={3} className="registration-title-main">
+                      ⏰ 活动时间
+                    </Title>
+                    <div className="registration-datetime">
+                      10月17日 22:18 - 10月18日 23:59
+                    </div>
             
-            <div className="age-notice">
-              <Tag color="blue" className="age-tag">
-                👶 适用年龄：5-12岁
-              </Tag>
-            </div>
-            
-            {isFull ? (
+            {isActivityEnded ? (
+              <div className="full-notice">
+                <Tag color="default" style={{ fontSize: '16px', padding: '10px 20px' }}>
+                  活动已结束，感谢您的关注！
+                </Tag>
+              </div>
+            ) : isFull ? (
               <div className="full-notice">
                 <Tag color="error" style={{ fontSize: '16px', padding: '10px 20px' }}>
                   报名名额已满，感谢您的关注！
                 </Tag>
+              </div>
+            ) : !isActivityStarted ? (
+              <div className="countdown-notice">
+                <div style={{ fontSize: '18px', color: '#fa8c16', marginBottom: '20px', fontWeight: '500', whiteSpace: 'nowrap' }}>
+                  <ClockCircleOutlined /> 活动即将开始，请耐心等待
+                </div>
+                <div className="countdown-timer" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                  <Text strong style={{ fontSize: '18px', color: '#1890ff', marginBottom: '10px' }}>
+                    距离报名开始还有
+                  </Text>
+                  <div style={{ fontSize: '24px', fontWeight: 'bold', color: '#ff4d4f', margin: '10px 0', whiteSpace: 'nowrap' }}>
+                    {countdown}
+                  </div>
+                          <Text type="secondary">
+                            开始时间：10月17日 22:18
+                          </Text>
+                </div>
+              </div>
+            ) : hasRegistered ? (
+              <div className="registered-notice">
+                <div className="registered-icon-wrapper">
+                  <CheckCircleOutlined className="registered-icon" />
+                </div>
+                <Title level={3} className="registered-title">
+                  ✅ 已预约报名成功！
+                </Title>
+                <Paragraph className="registered-message">
+                  感谢您的报名！请联系店长到店缴费并安排上课时间。
+                </Paragraph>
+                <div className="registered-contact">
+                  <div className="registered-qrcode">
+                    <img 
+                      src="https://jufengpp.oss-cn-beijing.aliyuncs.com/WechatIMG54.jpg" 
+                      alt="店长微信二维码" 
+                      className="registered-qrcode-image"
+                    />
+                    <Text strong style={{ marginTop: '12px', display: 'block', color: '#1890ff' }}>
+                      扫码联系店长
+                    </Text>
+                  </div>
+                </div>
               </div>
             ) : (
               <Form
@@ -283,6 +404,62 @@ const ActivityPage = () => {
           </div>
         </Card>
       </div>
+
+      {/* 报名成功模态框 */}
+      <Modal
+        open={showSuccessModal}
+        onCancel={handleCloseSuccessModal}
+        footer={[
+          <Button key="close" type="primary" onClick={handleCloseSuccessModal} size="large">
+            我知道了
+          </Button>
+        ]}
+        centered
+        width={500}
+        className="success-modal"
+      >
+        <div className="success-modal-content">
+          <div className="success-icon-wrapper">
+            <CheckCircleOutlined className="success-icon" />
+          </div>
+          <Title level={2} className="success-title">
+            🎉 预约成功！
+          </Title>
+          <Paragraph className="success-message">
+            恭喜您成功预约飓风乒乓中关村校区课程！
+          </Paragraph>
+          <Paragraph className="success-message">
+            我们已收到您的报名信息，请扫描下方二维码添加店长微信，确认课程安排。
+          </Paragraph>
+          
+          <div className="success-qrcode-section">
+            <div className="success-qrcode-container">
+              <img 
+                src="https://jufengpp.oss-cn-beijing.aliyuncs.com/WechatIMG54.jpg" 
+                alt="店长微信二维码" 
+                className="success-qrcode-image"
+              />
+              <Text strong style={{ marginTop: '15px', display: 'block', fontSize: '16px', color: '#1890ff' }}>
+                扫码添加店长微信
+              </Text>
+              <Text type="secondary" style={{ marginTop: '8px', display: 'block' }}>
+                长按识别二维码
+              </Text>
+            </div>
+          </div>
+
+          <div className="success-tips">
+            <Title level={5} style={{ marginBottom: '10px', color: '#fa8c16' }}>
+              ⚠️ 温馨提示
+            </Title>
+            <ul style={{ paddingLeft: '20px', margin: 0 }}>
+              <li>请尽快添加店长微信确认课程安排</li>
+              <li>活动名额有限，以实际确认为准</li>
+              <li>如有疑问，请联系店长咨询</li>
+            </ul>
+          </div>
+        </div>
+      </Modal>
     </div>
   );
 };
