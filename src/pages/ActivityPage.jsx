@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Card, Form, Input, Button, Radio, message, Space, Typography, Tag, Statistic, Row, Col } from 'antd';
+import { Card, Form, Input, Button, Radio, message, Space, Typography, Tag, Row, Col } from 'antd';
 import { PhoneOutlined, UserOutlined, GiftOutlined, ClockCircleOutlined, FireOutlined } from '@ant-design/icons';
 import registrationService from '../services/registration';
 import './ActivityPage.css';
@@ -58,24 +58,38 @@ const ActivityPage = () => {
       <div className="activity-container">
         <Card className="activity-card" bordered={false}>
           <div className="activity-header">
-            <div className="header-icon">🏓</div>
-            <Title level={2} className="activity-title">
-              10月18日店庆特惠！
-            </Title>
-            <Title level={3} className="activity-subtitle">
-              乒乓球培训超值课包来袭！
-            </Title>
+            <div className="brand-section">
+              <img src="/logo.png" alt="飓风乒乓" className="brand-logo" />
+              <Title level={2} className="brand-name">
+                飓风乒乓中关村校区
+              </Title>
+            </div>
+            <div className="activity-content">
+              <Title level={2} className="activity-title">
+                🏓 10月18日店庆特惠！
+              </Title>
+              <Title level={3} className="activity-subtitle">
+                乒乓球培训超值课包来袭！
+              </Title>
+              <div className="countdown-inline">
+                <Tag color="red" className="limited-tag">
+                  <FireOutlined /> 限时一天，先到先得
+                </Tag>
+                <div className="remaining-slots">
+                  <div className="slots-label">剩余名额</div>
+                  <div className="slots-value" style={{ color: remainingSlots > 0 ? '#3f8600' : '#cf1322' }}>
+                    {remainingSlots} / 10
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
 
-          <div className="countdown-section">
-            <Tag color="red" className="limited-tag">
-              <FireOutlined /> 限时一天，先到先得
-            </Tag>
-            <Statistic 
-              title="剩余名额" 
-              value={remainingSlots} 
-              suffix="/ 10"
-              valueStyle={{ color: remainingSlots > 0 ? '#3f8600' : '#cf1322' }}
+          <div className="activity-poster">
+            <img 
+              src="https://jufengpp.oss-cn-beijing.aliyuncs.com/WechatIMG56.jpg" 
+              alt="活动海报" 
+              className="poster-image"
             />
           </div>
 
@@ -83,58 +97,80 @@ const ActivityPage = () => {
             <Row gutter={16}>
               <Col xs={24} md={12}>
                 <Card className="package-card package-card-1" hoverable>
-                  <div className="package-icon">📦</div>
-                  <Title level={4}>课包一：30课时</Title>
-                  <div className="package-price">
+                  <div className="package-header">
+                    <span className="package-icon">📦</span>
+                    <Title level={4} className="package-title">30课时</Title>
+                  </div>
+                  <div className="package-price-row">
                     <div className="current-price">¥7,588</div>
-                    <div className="original-price">原价：¥9,000</div>
+                    <div className="price-details">
+                      <div className="original-price">¥9,600</div>
+                      <Tag color="volcano" className="discount-tag">省¥2,012</Tag>
+                    </div>
                   </div>
-                  <div className="package-discount">
-                    <Tag color="volcano">立省 ¥1,412</Tag>
+                  <div className="package-validity">
+                    <ClockCircleOutlined /> 4个月有效（排除寒假）
                   </div>
-                  <Paragraph className="package-validity">
-                    <ClockCircleOutlined /> 有效期：6个月
-                  </Paragraph>
                 </Card>
               </Col>
               <Col xs={24} md={12}>
                 <Card className="package-card package-card-2" hoverable>
-                  <div className="package-icon">📦</div>
-                  <Title level={4}>课包二：60课时</Title>
-                  <div className="package-price">
+                  <div className="package-header">
+                    <span className="package-icon">📦</span>
+                    <Title level={4} className="package-title">60课时</Title>
+                  </div>
+                  <div className="package-price-row">
                     <div className="current-price">¥14,488</div>
-                    <div className="original-price">原价：¥18,000</div>
+                    <div className="price-details">
+                      <div className="original-price">¥16,800</div>
+                      <Tag color="volcano" className="discount-tag">省¥2,312</Tag>
+                    </div>
                   </div>
-                  <div className="package-discount">
-                    <Tag color="volcano">立省 ¥3,512</Tag>
+                  <div className="package-validity">
+                    <ClockCircleOutlined /> 9个月有效（排除寒假）
                   </div>
-                  <Paragraph className="package-validity">
-                    <ClockCircleOutlined /> 有效期：12个月
-                  </Paragraph>
                 </Card>
               </Col>
             </Row>
           </div>
 
-          <div className="highlights-section">
-            <Title level={4} className="section-title">
-              <GiftOutlined /> 活动亮点
+          <div className="notice-section">
+            <Title level={4} className="notice-title">
+              ⚠️ 活动说明
             </Title>
-            <ul className="highlights-list">
-              <li>✨ 专业教练一对一指导</li>
-              <li>✨ 限定教练，品质保证</li>
-              <li>✨ 先到先得，手慢无</li>
-              <li>✨ 仅限10月18日当天</li>
-            </ul>
+            <div className="notice-list">
+              <div className="notice-item">
+                <span className="notice-icon">🆕</span>
+                <Text>限新学员报名</Text>
+              </div>
+              <div className="notice-item">
+                <span className="notice-icon">📌</span>
+                <Text>活动严格按有效期，过期不退不补，有多训练需求的学员报名</Text>
+              </div>
+              <div className="notice-item">
+                <span className="notice-icon">🎁</span>
+                <Text>课包不包含赠品，学员自备球拍、球衣、球包，三件套可从我机构优惠购买，299元/套</Text>
+              </div>
+              <div className="notice-item">
+                <span className="notice-icon">👨‍🏫</span>
+                <Text>此活动不可选择教练，如有选择教练需求请报名正式课并与店长沟通</Text>
+              </div>
+            </div>
           </div>
 
           <div className="registration-section">
-            <Title level={4} className="section-title">
-              立即抢购
+            <Title level={3} className="registration-title-main">
+              ⏰ 活动时间
             </Title>
-            <Paragraph className="activity-time">
-              ⏰ 活动时间：2025年10月18日 00:00-23:59
-            </Paragraph>
+            <div className="registration-datetime">
+              2025年10月18日 00:00-23:59
+            </div>
+            
+            <div className="age-notice">
+              <Tag color="blue" className="age-tag">
+                👶 适用年龄：5-12岁
+              </Tag>
+            </div>
             
             {isFull ? (
               <div className="full-notice">
@@ -152,11 +188,11 @@ const ActivityPage = () => {
                 <Form.Item
                   label="姓名"
                   name="name"
-                  rules={[{ required: true, message: '请输入您的姓名' }]}
+                  rules={[{ required: true, message: '请输入家长姓名或孩子姓名' }]}
                 >
                   <Input 
                     prefix={<UserOutlined />} 
-                    placeholder="请输入您的姓名" 
+                    placeholder="请输入家长姓名或孩子姓名" 
                     size="large"
                   />
                 </Form.Item>
@@ -214,9 +250,36 @@ const ActivityPage = () => {
           </div>
 
           <div className="contact-section">
-            <Text type="secondary">
-              📞 咨询方式：电话/微信咨询
-            </Text>
+            <div className="address-block">
+              <Title level={4} className="contact-title">
+                📍 场馆地址
+              </Title>
+              <Paragraph className="address-text">
+                北京市海淀区苏州街18号院2号<br/>
+                长远天地大厦B1座2层2204、2206
+              </Paragraph>
+            </div>
+            
+            <div className="divider-line"></div>
+            
+            <div className="qrcode-block">
+              <Title level={4} className="contact-title">
+                📞 扫码咨询
+              </Title>
+              <Paragraph type="secondary" style={{ marginBottom: '20px' }}>
+                扫描下方二维码，添加教练微信咨询详情
+              </Paragraph>
+              <div className="qrcode-container">
+                <img 
+                  src="https://jufengpp.oss-cn-beijing.aliyuncs.com/WechatIMG54.jpg" 
+                  alt="教练微信二维码" 
+                  className="qrcode-image"
+                />
+                <Text type="secondary" style={{ marginTop: '10px', display: 'block' }}>
+                  长按识别二维码添加微信
+                </Text>
+              </div>
+            </div>
           </div>
         </Card>
       </div>
@@ -225,4 +288,5 @@ const ActivityPage = () => {
 };
 
 export default ActivityPage;
+
 

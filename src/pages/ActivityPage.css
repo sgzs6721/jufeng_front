@@ -19,15 +19,48 @@
 
 .activity-header {
   text-align: center;
-  padding: 30px 20px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 25px 20px;
+  background: linear-gradient(135deg, #8b9bff 0%, #a78bfa 100%);
   color: white;
   margin: -24px -24px 24px -24px;
 }
 
+.activity-content {
+  padding: 0;
+}
+
+.brand-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+  padding: 0;
+  background: transparent;
+  border-bottom: none;
+}
+
+.brand-logo {
+  width: 220px;
+  height: 220px;
+  object-fit: contain;
+  margin-bottom: 15px;
+  background: transparent;
+  border-radius: 0;
+  padding: 0;
+  box-shadow: none;
+}
+
+.brand-name {
+  color: white !important;
+  margin: 0 0 20px 0 !important;
+  font-weight: bold;
+  font-size: 24px !important;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
 .header-icon {
-  font-size: 60px;
-  margin-bottom: 10px;
+  font-size: 45px;
+  margin-bottom: 6px;
   animation: bounce 2s infinite;
 }
 
@@ -42,44 +75,109 @@
 
 .activity-title {
   color: white !important;
-  margin-bottom: 10px !important;
+  margin-bottom: 6px !important;
   font-weight: bold;
+  font-size: 24px !important;
 }
 
 .activity-subtitle {
-  color: rgba(255, 255, 255, 0.9) !important;
-  margin-bottom: 0 !important;
+  color: rgba(255, 255, 255, 0.95) !important;
+  margin-bottom: 14px !important;
+  font-size: 17px !important;
 }
 
-.countdown-section {
-  text-align: center;
-  padding: 20px;
-  background: #f5f5f5;
+.countdown-inline {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 18px;
+  background: rgba(255, 255, 255, 0.9);
   border-radius: 10px;
-  margin-bottom: 30px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.5);
 }
 
 .limited-tag {
-  font-size: 16px;
-  padding: 8px 16px;
-  margin-bottom: 15px;
-  border-radius: 20px;
+  font-size: 13px;
+  padding: 5px 12px;
+  border-radius: 18px;
+  margin-bottom: 0;
+}
+
+.remaining-slots {
+  text-align: center;
+}
+
+.slots-label {
+  font-size: 12px;
+  color: #666;
+  margin-bottom: 4px;
+}
+
+.slots-value {
+  font-size: 28px;
+  font-weight: bold;
+  font-variant-numeric: tabular-nums;
 }
 
 .packages-section {
-  margin-bottom: 30px;
+  margin-bottom: 20px;
+}
+
+.notice-section {
+  background: #fff9f0;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 20px;
+  border-left: 4px solid #ff9800;
+}
+
+.notice-title {
+  color: #ff9800 !important;
+  margin-bottom: 15px !important;
+  font-size: 18px !important;
+  font-weight: bold !important;
+}
+
+.notice-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.notice-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 10px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.notice-icon {
+  font-size: 20px;
+  flex-shrink: 0;
+}
+
+.notice-item .ant-typography {
+  color: #666;
+  line-height: 1.6;
+  font-size: 14px;
 }
 
 .package-card {
-  text-align: center;
-  border-radius: 15px;
+  border-radius: 12px;
   margin-bottom: 16px;
   transition: all 0.3s ease;
+  padding: 14px !important;
 }
 
 .package-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
 }
 
 .package-card-1 {
@@ -90,35 +188,68 @@
   border: 2px solid #52c41a;
 }
 
-.package-icon {
-  font-size: 40px;
+.package-card .ant-card-body {
+  padding: 0 !important;
+}
+
+.package-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
   margin-bottom: 10px;
 }
 
-.package-price {
-  margin: 15px 0;
+.package-icon {
+  font-size: 28px;
+}
+
+.package-title {
+  font-size: 18px !important;
+  margin: 0 !important;
+  font-weight: bold !important;
+}
+
+.package-price-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  padding: 0 10px;
 }
 
 .current-price {
-  font-size: 32px;
+  font-size: 28px;
   font-weight: bold;
   color: #f5222d;
-  margin-bottom: 5px;
+}
+
+.price-details {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
 }
 
 .original-price {
-  font-size: 14px;
+  font-size: 12px;
   color: #999;
   text-decoration: line-through;
 }
 
-.package-discount {
-  margin: 10px 0;
+.discount-tag {
+  font-size: 11px !important;
+  padding: 2px 8px !important;
+  line-height: 1.3 !important;
 }
 
 .package-validity {
-  margin-top: 15px;
+  text-align: center;
+  margin: 0;
+  padding-top: 8px;
+  border-top: 1px dashed #e8e8e8;
   color: #666;
+  font-size: 13px;
 }
 
 .highlights-section {
@@ -131,6 +262,35 @@
 .section-title {
   margin-bottom: 15px !important;
   color: #1890ff;
+}
+
+.registration-title {
+  text-align: center;
+  color: #667eea !important;
+  margin-bottom: 25px !important;
+  font-weight: bold !important;
+  font-size: 20px !important;
+  display: block !important;
+  width: 100%;
+  line-height: 1.5 !important;
+}
+
+.registration-title-main {
+  text-align: center;
+  color: #667eea !important;
+  margin-bottom: 10px !important;
+  font-weight: bold !important;
+  font-size: 20px !important;
+  display: block !important;
+  width: 100%;
+}
+
+.registration-datetime {
+  text-align: center;
+  color: #1890ff;
+  font-size: 16px;
+  font-weight: 500;
+  margin-bottom: 20px;
 }
 
 .highlights-list {
@@ -149,6 +309,18 @@
   background: #f0f5ff;
   border-radius: 10px;
   margin-bottom: 20px;
+}
+
+.age-notice {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.age-tag {
+  font-size: 15px !important;
+  padding: 8px 20px !important;
+  border-radius: 20px !important;
+  font-weight: 500 !important;
 }
 
 .activity-time {
@@ -213,11 +385,79 @@
   padding: 20px;
 }
 
+.activity-poster {
+  margin-bottom: 30px;
+  text-align: center;
+  padding: 0;
+  background: transparent;
+}
+
+.poster-image {
+  width: 100%;
+  max-width: 800px;
+  height: auto;
+  border-radius: 0;
+  box-shadow: none;
+  transition: transform 0.3s ease;
+}
+
+.poster-image:hover {
+  transform: scale(1.02);
+}
+
 .contact-section {
   text-align: center;
-  padding: 15px;
-  background: #fafafa;
-  border-radius: 10px;
+  padding: 30px 20px;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  border-radius: 15px;
+  margin-top: 20px;
+}
+
+.address-block {
+  margin-bottom: 25px;
+}
+
+.address-text {
+  font-size: 16px;
+  color: #333;
+  line-height: 1.8;
+  margin: 15px 0;
+  font-weight: 500;
+}
+
+.divider-line {
+  width: 60%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #ddd, transparent);
+  margin: 25px auto;
+}
+
+.qrcode-block {
+  margin-top: 25px;
+}
+
+.contact-title {
+  margin-bottom: 10px !important;
+  color: #1890ff;
+}
+
+.qrcode-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+
+.qrcode-image {
+  width: 220px;
+  height: 220px;
+  border-radius: 25px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+  transition: transform 0.3s ease;
+}
+
+.qrcode-image:hover {
+  transform: scale(1.05);
 }
 
 @media (max-width: 768px) {
@@ -225,20 +465,138 @@
     padding: 20px 15px;
   }
 
+  .activity-content {
+    padding: 0;
+  }
+
+  .brand-logo {
+    width: 170px;
+    height: 170px;
+    margin-bottom: 12px;
+    padding: 0;
+  }
+
+  .brand-name {
+    font-size: 20px !important;
+    margin-bottom: 15px !important;
+  }
+  
+  .brand-section {
+    padding: 0;
+    margin-bottom: 15px;
+  }
+
   .header-icon {
-    font-size: 40px;
+    font-size: 38px;
+    margin-bottom: 5px;
   }
 
   .activity-title {
-    font-size: 24px !important;
+    font-size: 20px !important;
+    margin-bottom: 5px !important;
   }
 
   .activity-subtitle {
-    font-size: 18px !important;
+    font-size: 15px !important;
+    margin-bottom: 12px !important;
+  }
+
+  .countdown-inline {
+    padding: 10px 15px;
+    gap: 8px;
+  }
+
+  .limited-tag {
+    font-size: 12px;
+    padding: 4px 10px;
+  }
+
+  .slots-label {
+    font-size: 11px;
+    margin-bottom: 3px;
+  }
+
+  .slots-value {
+    font-size: 24px;
+  }
+
+  .package-icon {
+    font-size: 24px;
+  }
+
+  .package-card {
+    padding: 12px !important;
+  }
+
+  .package-title {
+    font-size: 16px !important;
+  }
+
+  .package-header {
+    gap: 6px;
+    margin-bottom: 8px;
+  }
+
+  .package-price-row {
+    padding: 0 5px;
+    margin-bottom: 6px;
   }
 
   .current-price {
     font-size: 24px;
+  }
+
+  .original-price {
+    font-size: 11px;
+  }
+
+  .discount-tag {
+    font-size: 10px !important;
+    padding: 2px 6px !important;
+  }
+
+  .package-validity {
+    font-size: 12px;
+    padding-top: 6px;
+  }
+
+  .registration-title {
+    font-size: 17px !important;
+    margin-bottom: 20px !important;
+    display: block !important;
+    width: 100%;
+  }
+
+  .registration-title-main {
+    font-size: 18px !important;
+    margin-bottom: 8px !important;
+  }
+
+  .registration-datetime {
+    font-size: 15px;
+    margin-bottom: 18px;
+  }
+
+  .notice-section {
+    padding: 15px;
+  }
+
+  .notice-title {
+    font-size: 16px !important;
+    margin-bottom: 12px !important;
+  }
+
+  .notice-item {
+    padding: 8px;
+    gap: 8px;
+  }
+
+  .notice-icon {
+    font-size: 18px;
+  }
+
+  .notice-item .ant-typography {
+    font-size: 13px;
   }
 
   .course-radio-group {
@@ -248,5 +606,38 @@
   .course-radio {
     width: 100%;
   }
+
+  .poster-image {
+    max-width: 100%;
+  }
+
+  .qrcode-image {
+    width: 180px;
+    height: 180px;
+    border-radius: 20px;
+  }
+
+  .contact-section {
+    padding: 20px 15px;
+  }
+
+  .address-block {
+    margin-bottom: 20px;
+  }
+
+  .address-text {
+    font-size: 14px;
+    line-height: 1.7;
+  }
+
+  .divider-line {
+    width: 80%;
+    margin: 20px auto;
+  }
+
+  .qrcode-block {
+    margin-top: 20px;
+  }
 }
+
 
