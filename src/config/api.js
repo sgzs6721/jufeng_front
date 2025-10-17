@@ -14,20 +14,20 @@ const ENVIRONMENTS = {
   
   // 测试环境
   testing: {
-    REMOTE_HOST: 'http://jufeng.devtesting.top',
+    REMOTE_HOST: 'https://jufeng.devtesting.top',
     API_BASE_PATH: '/jufeng/api',
     USE_PROXY: false,
-    PROTO: 'http',
-    PORT: '80',
+    PROTO: 'https',
+    PORT: '443',
   },
   
   // 生产环境
   production: {
-    REMOTE_HOST: 'http://jufeng.devtesting.top',
+    REMOTE_HOST: 'https://jufeng.devtesting.top',
     API_BASE_PATH: '/jufeng/api',
     USE_PROXY: false,
-    PROTO: 'http',
-    PORT: '80',
+    PROTO: 'https',
+    PORT: '443',
   }
 };
 
