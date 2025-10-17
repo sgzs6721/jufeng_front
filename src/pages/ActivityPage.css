@@ -54,7 +54,7 @@
   color: white !important;
   margin: 0 0 20px 0 !important;
   font-weight: bold;
-  font-size: 24px !important;
+  font-size: 36px !important;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 }
 
@@ -74,16 +74,18 @@
 }
 
 .activity-title {
-  color: white !important;
+  color: #FFD700 !important;
   margin-bottom: 6px !important;
   font-weight: bold;
   font-size: 24px !important;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 .activity-subtitle {
-  color: rgba(255, 255, 255, 0.95) !important;
+  color: #FFC107 !important;
   margin-bottom: 14px !important;
   font-size: 17px !important;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
 }
 
 .countdown-inline {
@@ -297,6 +299,16 @@
   font-size: 18px !important;
   margin: 0 !important;
   font-weight: bold !important;
+}
+
+.one-on-one-tag {
+  color: #ff6b35;
+  background: linear-gradient(135deg, #fff4e6, #ffe7ba);
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 600;
+  margin-left: 4px;
 }
 
 .package-price-row {
@@ -761,7 +773,7 @@
   }
 
   .brand-name {
-    font-size: 20px !important;
+    font-size: 28px !important;
     margin-bottom: 15px !important;
   }
   

@@ -127,41 +127,11 @@ const ActivityPage = () => {
             </div>
             <div className="activity-content">
               <Title level={2} className="activity-title">
-                🏓 10月18日店庆特惠！
+                🏓 10月18日店庆特惠！欢迎转发
               </Title>
               <Title level={3} className="activity-subtitle">
                 乒乓球培训超值课包来袭！
               </Title>
-              <div className="countdown-inline">
-                <div className="limited-tag-container">
-                  <FireOutlined className="fire-icon" />
-                  <span className="limited-text">限时一天，先到先得</span>
-                </div>
-                <div className="remaining-slots-card">
-                  <div className="slots-header">
-                    <GiftOutlined className="gift-icon" />
-                    <span className="slots-label">剩余名额</span>
-                  </div>
-                  <div className="slots-display">
-                    <span className="slots-current" style={{ color: remainingSlots > 0 ? '#52c41a' : '#ff4d4f' }}>
-                      {remainingSlots}
-                    </span>
-                    <span className="slots-divider">/</span>
-                    <span className="slots-total">10</span>
-                  </div>
-                  <div className="slots-progress">
-                    <div 
-                      className="slots-progress-bar" 
-                      style={{ 
-                        width: `${(10 - remainingSlots) * 10}%`,
-                        background: remainingSlots > 5 ? 'linear-gradient(90deg, #52c41a, #73d13d)' : 
-                                   remainingSlots > 0 ? 'linear-gradient(90deg, #faad14, #ffc53d)' : 
-                                   'linear-gradient(90deg, #ff4d4f, #ff7875)'
-                      }}
-                    />
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
 
@@ -173,13 +143,46 @@ const ActivityPage = () => {
             />
           </div>
 
+          <div className="countdown-inline">
+            <div className="limited-tag-container">
+              <FireOutlined className="fire-icon" />
+              <span className="limited-text">限时一天，先到先得</span>
+            </div>
+            <div className="remaining-slots-card">
+              <div className="slots-header">
+                <GiftOutlined className="gift-icon" />
+                <span className="slots-label">剩余名额</span>
+              </div>
+              <div className="slots-display">
+                <span className="slots-current" style={{ color: remainingSlots > 0 ? '#52c41a' : '#ff4d4f' }}>
+                  {remainingSlots}
+                </span>
+                <span className="slots-divider">/</span>
+                <span className="slots-total">10</span>
+              </div>
+              <div className="slots-progress">
+                <div 
+                  className="slots-progress-bar" 
+                  style={{ 
+                    width: `${(10 - remainingSlots) * 10}%`,
+                    background: remainingSlots > 5 ? 'linear-gradient(90deg, #52c41a, #73d13d)' : 
+                               remainingSlots > 0 ? 'linear-gradient(90deg, #faad14, #ffc53d)' : 
+                               'linear-gradient(90deg, #ff4d4f, #ff7875)'
+                  }}
+                />
+              </div>
+            </div>
+          </div>
+
           <div className="packages-section">
             <Row gutter={16}>
               <Col xs={24} md={12}>
                 <Card className="package-card package-card-1" hoverable>
                   <div className="package-header">
                     <span className="package-icon">📦</span>
-                    <Title level={4} className="package-title">30课时</Title>
+                    <Title level={4} className="package-title">
+                      30课时 <span className="one-on-one-tag">一对一</span>
+                    </Title>
                   </div>
                   <div className="package-price-row">
                     <div className="current-price">¥7,588</div>
@@ -197,7 +200,9 @@ const ActivityPage = () => {
                 <Card className="package-card package-card-2" hoverable>
                   <div className="package-header">
                     <span className="package-icon">📦</span>
-                    <Title level={4} className="package-title">60课时</Title>
+                    <Title level={4} className="package-title">
+                      60课时 <span className="one-on-one-tag">一对一</span>
+                    </Title>
                   </div>
                   <div className="package-price-row">
                     <div className="current-price">¥14,488</div>
